@@ -3,6 +3,11 @@
 #include <opencv2/imgproc.hpp>
 #include <functional>
 
+cv::Mat inline no_filter(cv::Mat f)
+{
+	return f;
+}
+
 cv::Mat sobel_filter(cv::Mat f)
 {
 	cv::Mat res;
@@ -102,6 +107,7 @@ cv::Mat negative_filter(cv::Mat f)
 
 enum Filters
 {
+	NONE,
 	SOBEL,
 	CARTOON,
 	PENCIL,
@@ -124,7 +130,7 @@ int main()
 	cv::VideoCapture cap(0);
 	cv::Mat frame;
 
-	std::function<cv::Mat(cv::Mat f)> filters[COUNT] = { sobel_filter, cartoon_filter, pencil_filter, hsv_filter, red_filter, blue_filter, green_filter, grayscale_filter, negative_filter };
+	std::function<cv::Mat(cv::Mat f)> filters[COUNT] = { no_filter, sobel_filter, cartoon_filter, pencil_filter, hsv_filter, red_filter, blue_filter, green_filter, grayscale_filter, negative_filter };
 
 	int k = 0;
 	while (k != 27)
