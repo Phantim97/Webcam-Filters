@@ -12,7 +12,11 @@ project(WebcamFilters LANGUAGES CXX)
 
 # Note LIBS_PATH is my env var to where all my libraries are located. also bin dlls
 # are mapped to my PATH as well.
-set(OpenCV_DIR $ENV{LIBS_PATH}/opencv-master/out/install/x64-Release)
+if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
+	set(OpenCV_DIR $ENV{LIBS_PATH}/opencv-master/out/install/x64-Release)
+elseif(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+	set(OpenCV_DIR $ENV{LIBS_PATH}/opencv-master/out/install/x64-Debug)
+endif()
 
 find_package(OpenCV REQUIRED)
 
