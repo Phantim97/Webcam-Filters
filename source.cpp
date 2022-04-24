@@ -105,6 +105,21 @@ cv::Mat negative_filter(cv::Mat f)
 	return f;
 }
 
+cv::Mat sepia_filter(cv::Mat f)
+{
+	//Sepia Kernel
+	const cv::Mat kernel =
+		(cv::Mat_<float>(3, 3)
+			<<
+			0.272, 0.534, 0.131,
+			0.349, 0.686, 0.168,
+			0.393, 0.769, 0.189
+			);
+
+	cv::transform(f, f, kernel);
+	return f;
+}
+
 enum Filters
 {
 	NONE,
@@ -117,6 +132,7 @@ enum Filters
 	GREEN,
 	BW,
 	NEGATIVE,
+	SEPIA,
 	COUNT
 };
 
@@ -130,7 +146,7 @@ int main()
 	cv::VideoCapture cap(0);
 	cv::Mat frame;
 
-	std::function<cv::Mat(cv::Mat f)> filters[COUNT] = { no_filter, sobel_filter, cartoon_filter, pencil_filter, hsv_filter, red_filter, blue_filter, green_filter, grayscale_filter, negative_filter };
+	const std::function<cv::Mat(cv::Mat f)> filters[COUNT] = { no_filter, sobel_filter, cartoon_filter, pencil_filter, hsv_filter, red_filter, blue_filter, green_filter, grayscale_filter, negative_filter, sepia_filter };
 
 	int k = 0;
 	while (k != 27)
